@@ -1,13 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <style> /*  problems with adding external stylesheet - we work with what we got*/
+        .tagParentDiv {
+            border: 1px solid black;
+            text-align: left;
+        }
+        .tagChildDiv {
+            display: inline-block;
+            border: 1px solid red;
+            padding: 1rem 1rem;
+            vertical-align: middle;
+        }
+        
+
+    </style>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cookbook</title>
+
 </head>
 <body>
-    My cookbook
-    {{ a }}
+    <div class="tagParentDiv">
+        <div class="tagChildDiv">
+            <select name="cars" id="cars" multiple>
+                {% for tag in tags %}
+                    <option value="{{ tag }}">{{ tag }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="tagChildDiv">
+            <select name="cars" id="cars" multiple>
+            <!-- her skal en anden liste med valgte tags være
+            Der skal tilføjes et søgefelt for dem alle
+            i stedet for den her "multiple select", kunne jeg tage inspiration fra det jeg lavede i p3-->
+            </select>
+        </div>
+    </div>
 </body>
 </html>

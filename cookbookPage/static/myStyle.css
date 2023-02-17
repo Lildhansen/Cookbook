@@ -1,0 +1,43 @@
+button[name="tagInTagsMenu"] {
+  border: 1px;
+  cursor: pointer;
+}
+
+.allTagsDiv {
+  display: inline-block;
+  border: 1px solid rgb(199, 15, 15);
+  vertical-align: middle;
+}
+
+.addTagsDiv {
+
+
+}
+
+
+.deleteTagImage {
+  height:auto;
+  max-width: fit-content;
+  display: inline-block;
+}
+
+.nameTagElementChildDiv {
+  width: 50%;
+  float: left;
+}
+
+.removeTagElementChildDiv {
+  float: right;  
+}
+
+.tagElement {
+  display: inline-block;
+  width:100%;
+}
+
+.addTagText {
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}

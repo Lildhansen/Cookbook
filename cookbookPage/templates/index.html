@@ -17,19 +17,12 @@
             <div class="tagElement">
                 <div class="nameTagElementChildDiv" >
                     <form action="interactWithTag" method="POST">
-                        {% csrf_token %}
-                        <!-- bare lav en kasse med buttons i - på den måde kan du overføre data når man "trykker" på knappen
-                        når knappen er blevet trykket på, kan den derefter være en specifik farve (mere grå)
-                        der skal så gøres noget æstetisk så buttonsne ikke ligner buttons
-                    
-                            https://stackoverflow.com/questions/4706255/how-to-get-value-from-form-field-in-django-framework
-                    -->
-                            
-                                {% if tag.selected %}
-                                    <button name="tagInTagsMenu" type="onclick" value="{{ tag }}" style="background:fixed; background-color: grey;">{{ tag }}</button>
-                                {% else %}
-                                    <button name="tagInTagsMenu" type="onclick" value="{{ tag }}" style="background: none!important;">{{ tag }}</button>
-                                {% endif %}
+                        {% csrf_token %}                          
+                        {% if tag.selected %}
+                            <button name="tagInTagsMenu" type="onclick" value="{{ tag }}" style="background:fixed; background-color: grey;">{{ tag }}</button>
+                        {% else %}
+                            <button name="tagInTagsMenu" type="onclick" value="{{ tag }}" style="background: none!important;">{{ tag }}</button>
+                        {% endif %}
                     </form>
                 </div>
                 <div class="removeTagElementChildDiv">

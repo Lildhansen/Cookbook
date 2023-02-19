@@ -4,9 +4,8 @@ function updateSearch(searchBarValue)
     allTagElementsCopy = [...allTagElements]
     for (const tag of allTagElementsCopy)
     {
-        tag.style.display = "block"
+        tag.style.display = "inline-block"
         tagName = tag.querySelector('button[name="tagInTagsMenu"]').value
-        console.log(typeof tagName)
         if (!tagName.includes(searchBarValue))
             tag.style.display = "none"
     }

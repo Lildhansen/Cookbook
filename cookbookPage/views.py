@@ -29,6 +29,7 @@ def interactWithTag(request):
     return(redirect('/'))
 
 def deleteTag(request):
+    #print(request.POST.get('tagInTagsMenu').value)
     #nu burde et tag kunne blive slettet baseret på dens navn - https://stackoverflow.com/questions/3805958/how-to-delete-a-record-in-django-models
     print("delete the tag plz")
     return(redirect('/'))

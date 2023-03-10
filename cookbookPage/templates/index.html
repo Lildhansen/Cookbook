@@ -8,12 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cookbook</title>
 </head>
-<body>
+<body><!-- måske tags skal være i en sidebar så de ikke fylder så meget -->
+<div class="tagSection"> 
     <div class="searchBarDiv">
         <input name="searchBar" type="search" id="searchBarAllTags" class="searchBar" placeholder="search tag ..." oninput="updateSearch(this.value)" />
     </div>
         <div class="allTagsDiv">
-            {% for tag in tags %}
+            {% for tag in myTags %}
             <div class="tagElement">
                 <div class="nameTagElementChildDiv" >
                     <form action="interactWithTag" method="POST">
@@ -26,10 +27,9 @@
                     </form>
                 </div>
                 <div class="removeTagElementChildDiv">
-                <form id="deleteTagForm">
+                <form action="/deleteTag" method="POST">
                     {% csrf_token %}
-                    <!-- det er en post den fyrer med den kan ikke finde navnet for some reason-->
-                    <input type="image" name="deleteTagImage" class="deleteTagImage" src="{% static 'images/deleteTag.png' %}" width = "10" height = "10" onclick="removeTag(this.parentElement.parentElement)">
+                    <input type="image" name="deleteTagImage" class="deleteTagImage" src="{% static 'images/deleteTag.png' %}" width = "10" height = "10" onclick="return removeTag(this.parentElement.parentElement)">
                 </form>
                 </div>
             </div>
@@ -54,5 +54,29 @@
         </div>
         <!-- der skal være en eller anden toggle eller lign. for om recipes'ne skal vises hvor de opfylder alle tags, 
             eller hvor blot de kan have en af det tags (så basically om or eller and) -->
+</div>
+<div class="topBar"> <!-- pt er det mere tags der bare skal flyttes længere ned-->
+    <div class="topBarOption" id="topBarSearchBar">
+        <input type="search" placeholder="recipe ..."> <!-- this placeholder should be changed when changing #topBarTypeOfSearch -->
+    </div>
+    <div class="topBarOption" id="topBarFilterSelection">
+        <select>
+            <option value="" selected disabled hidden>Filter</option>
+            <option>date added (descending)</option>
+            <option>date added (ascending)</option>
+        </select>
+        <input type="image" src="{% static 'images/deleteTag.png' %}" width = "10" height = "10">
+    </div>
+    <div class="topBarOption" id="topBarTypeOfSearch">
+        <div><p>search for ...</p></div>
+         <div id="typeOfSearchSelectionDiv">   
+            <select id="typeOfSearchSelection">
+                <option>recipes</option>
+                <option>tags</option>
+            </select>
+        </div>
+    </div>
+
+</div>
 </body>
 </html>

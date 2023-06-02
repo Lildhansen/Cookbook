@@ -3,11 +3,15 @@ from django.http import HttpResponse
 from django import forms
 from django.shortcuts import redirect
 
-from .models import Tag
-from .classes.TagInAllTagsList import TagInAllTagsList
-from .util import utility as util
+
 from datetime import datetime
 import time
+
+
+from .models import Tag
+from .models import Recipe
+from .classes.TagInAllTagsList import TagInAllTagsList
+from .util import utility as util
 
 tagsFromModel = Tag.objects.all()
 tags = []
@@ -23,6 +27,8 @@ def main(request):
     context = {'myTags':tags}
     return render(request, 'index.html',context)
 
+#tag stuff
+#region tags
 def interactWithTag(request):
     tag = util.findTagByTagName(request.POST.get('tagInTagsMenu'),tags)
     tag.selected = not tag.selected
@@ -52,4 +58,14 @@ def deselectAllTags(request):
 def addTag(request):
     newTagName = request.POST.get('addTagInput').capitalize().strip()
     Tag.objects.create(name=newTagName)
+    return redirect("/")
+
+#endregion
+
+def addRecipe(request):
+    nameOfRecipeToAdd = request.POST.get("nameOfRecipeToAdd")
+    linkOfRecipeToAdd = request.POST.get("linkOfRecipeToAdd")
+    today = datetime.today().strftime('%Y-%m-%d')
+    print(nameOfRecipeToAdd,linkOfRecipeToAdd)
+    Recipe.objects.create(name=nameOfRecipeToAdd,link=linkOfRecipeToAdd,dateAdded=today)
     return redirect("/")

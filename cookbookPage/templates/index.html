@@ -52,7 +52,7 @@
                 <input type="text" name="addTagInput" size="7">
             </form>
         </div>
-        <!-- der skal være en eller anden toggle eller lign. for om recipes'ne skal vises hvor de opfylder alle tags, 
+        <!-- der skal være en eller anden toggle ("recipe must have all tags") eller lign. for om recipes'ne skal vises hvor de opfylder alle tags, 
             eller hvor blot de kan have en af det tags (så basically om or eller and) -->
 </div>
 <div class="topBar"> <!-- pt er det mere tags der bare skal flyttes længere ned-->
@@ -76,7 +76,26 @@
             </select>
         </div>
     </div>
-
+</div>
+<!--right now all tags gets assigned all recipes and vice versa-->
+<div class="addRecipeSection">
+    <h4>Add recipe based on URL:</h4>
+    <form action="/addRecipe" method="POST">
+        {% csrf_token %}
+        <input type="url" name="linkOfRecipeToAdd" id="linkOfRecipeToAdd" placeholder="URL for recipe" required>
+        {% csrf_token %}
+        <input type="texy" name="nameOfRecipeToAdd" id="nameOfRecipeToAdd" placeholder="name of recipe" required>
+        <div class="associatedTagsForRecipeToAddDiv">
+            <h4 id="tagsForRecipe">Selected Tags for recipe:</h4>
+            {% for tag in myTags %}
+                <input type="checkbox" value="{{ tag }}" name="{{ tag }}">
+                <label for="{{ tag }}"> {{ tag }}</label><br>
+            {% endfor %}
+        </div>
+        <input type="submit" value="Add recipe">
+    </form>
+    
+    <h4>or add it some other way: </h4> <!--epicR stuff and also maybe from txt/docx file-->
 </div>
 </body>
 </html>

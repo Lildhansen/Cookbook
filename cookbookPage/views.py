@@ -27,7 +27,6 @@ def main(request):
     context = {'myTags':tags}
     return render(request, 'index.html',context)
 
-#tag stuff
 #region tags
 def interactWithTag(request):
     tag = util.findTagByTagName(request.POST.get('tagInTagsMenu'),tags)
@@ -38,6 +37,7 @@ def deleteTag(request):
     tagName = request.body.decode('utf-8')
     Tag.objects.filter(name=tagName).delete()
     tagsFromModel = Tag.objects.all()
+    print(tagsFromModel)
     for tag in tags: 
         if util.findTagByTagName(tag.name,tagsFromModel) == None: #if the tag from the original list is not in the model, it has been deleted
             tags.remove(tag)
@@ -65,7 +65,9 @@ def addTag(request):
 def addRecipe(request):
     nameOfRecipeToAdd = request.POST.get("nameOfRecipeToAdd")
     linkOfRecipeToAdd = request.POST.get("linkOfRecipeToAdd")
+    tagsToAddToRecipe = request.POST.getlist("tagsToAddToRecipe")
     today = datetime.today().strftime('%Y-%m-%d')
-    print(nameOfRecipeToAdd,linkOfRecipeToAdd)
-    Recipe.objects.create(name=nameOfRecipeToAdd,link=linkOfRecipeToAdd,dateAdded=today)
+    recipe = Recipe.objects.create(name=nameOfRecipeToAdd,link=linkOfRecipeToAdd,dateAdded=today)
+    for tag in tagsToAddToRecipe:  
+        recipe.tagNames.add(Tag.objects.get(name=tag))   
     return redirect("/")

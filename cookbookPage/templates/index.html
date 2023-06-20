@@ -87,8 +87,9 @@
         <input type="texy" name="nameOfRecipeToAdd" id="nameOfRecipeToAdd" placeholder="name of recipe" required>
         <div class="associatedTagsForRecipeToAddDiv">
             <h4 id="tagsForRecipe">Selected Tags for recipe:</h4>
+            {% csrf_token %}
             {% for tag in myTags %}
-                <input type="checkbox" value="{{ tag }}" name="{{ tag }}">
+                <input type="checkbox" value="{{ tag }}" name="tagsToAddToRecipe" id="{{ tag }}">
                 <label for="{{ tag }}"> {{ tag }}</label><br>
             {% endfor %}
         </div>

@@ -73,9 +73,11 @@ button[name="tagInTagsMenu"] {
 
 /* THIS STUPID DIV WONT GET VERTICALLY CENTERED */
 #typeOfSearchSelectionDiv {
-  top:70%;
+  top:15px;
   float:right;
-  vertical-align: middle 
+  vertical-align: middle; 
+  overflow:hidden;
+  position:relative;
 }
 
 .deleteTagImage {
@@ -94,7 +96,6 @@ button[name="tagInTagsMenu"] {
 }
 
 .tagElement {
-  display: inline-block;
   width:100%;
 }
 

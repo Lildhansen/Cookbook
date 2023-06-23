@@ -15,6 +15,7 @@ from .util import utility as util
 
 tagsFromModel = Tag.objects.all()
 tags = []
+recipes = Recipe.objects.all()
 
 def loadTagsFromModel():
     tagsFromModel = Tag.objects.all()#Here we load the tags from the model (different from their representation on the frontend)
@@ -24,7 +25,7 @@ def loadTagsFromModel():
     
 def main(request):
     loadTagsFromModel()
-    context = {'myTags':tags}
+    context = {'myTags':tags, 'myRecipes':recipes}
     return render(request, 'index.html',context)
 
 #region tags
@@ -71,3 +72,6 @@ def addRecipe(request):
     for tag in tagsToAddToRecipe:  
         recipe.tagNames.add(Tag.objects.get(name=tag))   
     return redirect("/")
+
+def showRecipe():
+    pass

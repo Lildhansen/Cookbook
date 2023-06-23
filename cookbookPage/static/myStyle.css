@@ -113,11 +113,18 @@ button[name="tagInTagsMenu"] {
 }
 
 .titleForRecipe{
+  position: absolute;
   display: inline;
-  height:36px;
+  color:black;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top:5%;
+  z-index:100;
 }
 
 .recipeImageDiv{
+  position: relative;
+  text-align: center;
   display: flex;
     justify-content: center;
     align-items: center;
@@ -126,10 +133,11 @@ button[name="tagInTagsMenu"] {
 
 .recipeImage{
   width: 100%;
-   height: calc(264px); /* 300-36 (36=size of title for recipe (h1)*/
+   height: 300px;
    background-size: cover;
    background-repeat: no-repeat;
    background-position: center;
+   opacity: 0.5
 }
 
 /* THIS STUPID DIV WONT GET VERTICALLY CENTERED - maybe fixed i dunno*/

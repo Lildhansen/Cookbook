@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="stylesheet" href="{% static 'myStyle.css' %}">
     <script src="{% static 'index.js' %}"></script>
@@ -8,29 +9,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cookbook</title>
 </head>
+
 <body><!-- måske tags skal være i en sidebar så de ikke fylder så meget -->
-<div class="tagSection"> 
-    <div class="searchBarDiv">
-        <input name="searchBar" type="search" id="searchBarAllTags" class="searchBar" placeholder="search tag ..." oninput="updateSearch(this.value)" />
+
+    <div class="topBar"> <!-- pt er det mere tags der bare skal flyttes længere ned-->
+        <div class="topBarOption" id="topBarSearchBar">
+            <input type="search" placeholder="recipe ...">
+            <!-- this placeholder should be changed when changing #topBarTypeOfSearch -->
+        </div>
+        <div class="topBarOption" id="topBarFilterSelection">
+            <select>
+                <option value="" selected disabled hidden>Filter</option>
+                <option>date added (descending)</option>
+                <option>date added (ascending)</option>
+            </select>
+            <input type="image" src="{% static 'images/deleteTag.png' %}" width="10" height="10">
+        </div>
+        <div class="topBarOption" id="topBarTypeOfSearch">
+            <div>
+                <p>search for ...</p>
+            </div>
+            <div id="typeOfSearchSelectionDiv">
+                <select id="typeOfSearchSelection">
+                    <option>recipes</option>
+                    <option>tags</option>
+                </select>
+            </div>
+        </div>
     </div>
+
+    <div class="tagSection">
+        <div class="searchBarDiv">
+            <input name="searchBar" type="search" id="searchBarAllTags" class="searchBar" placeholder="search tag ..."
+                oninput="updateSearch(this.value)" />
+        </div>
         <div class="allTagsDiv">
             {% for tag in myTags %}
             <div class="tagElement">
-                <div class="nameTagElementChildDiv" >
+                <div class="nameTagElementChildDiv">
                     <form action="interactWithTag" method="POST">
-                        {% csrf_token %}                          
+                        {% csrf_token %}
                         {% if tag.selected %}
-                            <button name="tagInTagsMenu" type="onclick" value="{{ tag }}" style="background:fixed; background-color: grey;">{{ tag }}</button>
+                        <button name="tagInTagsMenu" type="onclick" value="{{ tag }}"
+                            style="background:fixed; background-color: grey;">{{ tag }}</button>
                         {% else %}
-                            <button name="tagInTagsMenu" type="onclick" value="{{ tag }}" style="background: none!important;">{{ tag }}</button>
+                        <button name="tagInTagsMenu" type="onclick" value="{{ tag }}"
+                            style="background: none!important;">{{ tag }}</button>
                         {% endif %}
                     </form>
                 </div>
                 <div class="removeTagElementChildDiv">
-                <form action="/deleteTag" method="POST">
-                    {% csrf_token %}
-                    <input type="image" name="deleteTagImage" class="deleteTagImage" src="{% static 'images/deleteTag.png' %}" width = "10" height = "10" onclick="return removeTag(this.parentElement.parentElement)">
-                </form>
+                    <form action="/deleteTag" method="POST">
+                        {% csrf_token %}
+                        <input type="image" name="deleteTagImage" class="deleteTagImage"
+                            src="{% static 'images/deleteTag.png' %}" width="10" height="10"
+                            onclick="return removeTag(this.parentElement.parentElement)">
+                    </form>
                 </div>
             </div>
             {% endfor %}
@@ -54,49 +88,28 @@
         </div>
         <!-- der skal være en eller anden toggle ("recipe must have all tags") eller lign. for om recipes'ne skal vises hvor de opfylder alle tags, 
             eller hvor blot de kan have en af det tags (så basically om or eller and) -->
-</div>
-<div class="topBar"> <!-- pt er det mere tags der bare skal flyttes længere ned-->
-    <div class="topBarOption" id="topBarSearchBar">
-        <input type="search" placeholder="recipe ..."> <!-- this placeholder should be changed when changing #topBarTypeOfSearch -->
     </div>
-    <div class="topBarOption" id="topBarFilterSelection">
-        <select>
-            <option value="" selected disabled hidden>Filter</option>
-            <option>date added (descending)</option>
-            <option>date added (ascending)</option>
-        </select>
-        <input type="image" src="{% static 'images/deleteTag.png' %}" width = "10" height = "10">
-    </div>
-    <div class="topBarOption" id="topBarTypeOfSearch">
-        <div><p>search for ...</p></div>
-         <div id="typeOfSearchSelectionDiv">   
-            <select id="typeOfSearchSelection">
-                <option>recipes</option>
-                <option>tags</option>
-            </select>
-        </div>
-    </div>
-</div>
-<!--right now all tags gets assigned all recipes and vice versa-->
-<div class="addRecipeSection">
-    <h4>Add recipe based on URL:</h4>
-    <form action="/addRecipe" method="POST">
-        {% csrf_token %}
-        <input type="url" name="linkOfRecipeToAdd" id="linkOfRecipeToAdd" placeholder="URL for recipe" required>
-        {% csrf_token %}
-        <input type="texy" name="nameOfRecipeToAdd" id="nameOfRecipeToAdd" placeholder="name of recipe" required>
-        <div class="associatedTagsForRecipeToAddDiv">
-            <h4 id="tagsForRecipe">Selected Tags for recipe:</h4>
+    <!--right now all tags gets assigned all recipes and vice versa-->
+    <div class="addRecipeSection">
+        <h4>Add recipe based on URL:</h4>
+        <form action="/addRecipe" method="POST">
             {% csrf_token %}
-            {% for tag in myTags %}
+            <input type="url" name="linkOfRecipeToAdd" id="linkOfRecipeToAdd" placeholder="URL for recipe" required>
+            {% csrf_token %}
+            <input type="texy" name="nameOfRecipeToAdd" id="nameOfRecipeToAdd" placeholder="name of recipe" required>
+            <div class="associatedTagsForRecipeToAddDiv">
+                <h4 id="tagsForRecipe">Selected Tags for recipe:</h4>
+                {% csrf_token %}
+                {% for tag in myTags %}
                 <input type="checkbox" value="{{ tag }}" name="tagsToAddToRecipe" id="{{ tag }}">
                 <label for="{{ tag }}"> {{ tag }}</label><br>
-            {% endfor %}
-        </div>
-        <input type="submit" value="Add recipe">
-    </form>
-    
-    <h4>or add it some other way: </h4> <!--epicR stuff and also maybe from txt/docx file-->
-</div>
+                {% endfor %}
+            </div>
+            <input type="submit" value="Add recipe">
+        </form>
+
+        <h4>or add it some other way: </h4> <!--epicR stuff and also maybe from txt/docx file-->
+    </div>
 </body>
+
 </html>

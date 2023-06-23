@@ -98,7 +98,10 @@
             {% endif %}
 
                 <div class="recipeDiv">
-                    <h1>{{ recipe }}</h1>
+                    <h1 class="titleForRecipe">{{ recipe }}</h1>
+                    <div class="recipeImageDiv">
+                        <img class="recipeImage" src="{{ recipe.image }}">
+                    </div>
                 </div>
             {% if forloop.counter0|modulo:3 == 2 or forloop.last %}
                 </div>
@@ -112,7 +115,9 @@
             {% csrf_token %}
             <input type="url" name="linkOfRecipeToAdd" id="linkOfRecipeToAdd" placeholder="URL for recipe" required>
             {% csrf_token %}
-            <input type="texy" name="nameOfRecipeToAdd" id="nameOfRecipeToAdd" placeholder="name of recipe" required>
+            <!--this input must be santized-->
+            <input type="text" name="nameOfRecipeToAdd" id="nameOfRecipeToAdd" placeholder="name of recipe" required>
+            <input type="text" name="imageOfRecipeToAdd" id="imageOfRecipeToAdd" placeholder="link to image of recipe">
             <div class="associatedTagsForRecipeToAddDiv">
                 <h4 id="tagsForRecipe">Selected Tags for recipe:</h4>
                 {% csrf_token %}

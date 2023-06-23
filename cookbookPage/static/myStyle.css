@@ -4,7 +4,7 @@ body {
 
 html, body {
   height: 100%;
-  overflow: hidden; /* if number of tags gets too high this is an issue*/
+  /* overflow: hidden; if number of tags gets too high this is an issue */
 }
 
 button[name="tagInTagsMenu"] {
@@ -103,15 +103,36 @@ button[name="tagInTagsMenu"] {
 }
 
 .recipeDiv{
-  width:33.3%;
+  width:33%;
   height: 100%;
   position: relative;
   background-color: green;
   float:left;
   text-align:center;
+  margin-right: .3%;
 }
 
-/* THIS STUPID DIV WONT GET VERTICALLY CENTERED */
+.titleForRecipe{
+  display: inline;
+  height:36px;
+}
+
+.recipeImageDiv{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden
+}
+
+.recipeImage{
+  width: 100%;
+   height: calc(264px); /* 300-36 (36=size of title for recipe (h1)*/
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-position: center;
+}
+
+/* THIS STUPID DIV WONT GET VERTICALLY CENTERED - maybe fixed i dunno*/
 #typeOfSearchSelectionDiv {
   top:15px;
   float:right;

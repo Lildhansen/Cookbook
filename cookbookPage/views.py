@@ -66,9 +66,13 @@ def addTag(request):
 def addRecipe(request):
     nameOfRecipeToAdd = request.POST.get("nameOfRecipeToAdd")
     linkOfRecipeToAdd = request.POST.get("linkOfRecipeToAdd")
+    imageOfRecipeToAdd = request.POST.get("imageOfRecipeToAdd")
+    if imageOfRecipeToAdd == "":
+        imageOfRecipeToAdd = util.noImageStockPhoto
     tagsToAddToRecipe = request.POST.getlist("tagsToAddToRecipe")
     today = datetime.today().strftime('%Y-%m-%d')
-    recipe = Recipe.objects.create(name=nameOfRecipeToAdd,link=linkOfRecipeToAdd,dateAdded=today)
+    recipe = Recipe.objects.create(name=nameOfRecipeToAdd,link=linkOfRecipeToAdd,image=imageOfRecipeToAdd,dateAdded=today)
+    print(recipe.image)
     for tag in tagsToAddToRecipe:  
         recipe.tagNames.add(Tag.objects.get(name=tag))   
     return redirect("/")

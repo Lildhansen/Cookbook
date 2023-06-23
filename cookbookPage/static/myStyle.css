@@ -107,9 +107,8 @@ button[name="tagInTagsMenu"] {
   height: 100%;
   position: relative;
   background-color: green;
-  display: inline.block;
   float:left;
-  text-align:center
+  text-align:center;
 }
 
 /* THIS STUPID DIV WONT GET VERTICALLY CENTERED */

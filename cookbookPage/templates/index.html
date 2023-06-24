@@ -100,6 +100,13 @@
                 <div class="recipeDiv">
                     <h1 class="titleForRecipe">{{ recipe }}</h1>
                     <button class="editRecipeButton">edit</button>
+                    <p class="tagsForRecipeText">
+                        Tags: 
+                        {% for tag in recipe.tagNames.all %}
+                        {{ tag }}
+                        {% endfor %}
+
+                    </p>
                     <div class="recipeImageDiv">
                         <a href="{{ recipe.link }}" target="_blank"><img class="recipeImage" src="{{ recipe.image }}"></a>
                     </div>

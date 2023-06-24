@@ -99,8 +99,9 @@
 
                 <div class="recipeDiv">
                     <h1 class="titleForRecipe">{{ recipe }}</h1>
+                    <button class="editRecipeButton">edit</button>
                     <div class="recipeImageDiv">
-                        <img class="recipeImage" src="{{ recipe.image }}">
+                        <a href="{{ recipe.link }}" target="_blank"><img class="recipeImage" src="{{ recipe.image }}"></a>
                     </div>
                 </div>
             {% if forloop.counter0|modulo:3 == 2 or forloop.last %}

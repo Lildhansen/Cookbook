@@ -140,6 +140,12 @@ button[name="tagInTagsMenu"] {
    opacity: 0.5
 }
 
+.editRecipeButton{
+  position: absolute;
+  display: block;
+  z-index:100;
+}
+
 /* THIS STUPID DIV WONT GET VERTICALLY CENTERED - maybe fixed i dunno*/
 #typeOfSearchSelectionDiv {
   top:15px;

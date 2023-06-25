@@ -69,13 +69,6 @@ button[name="tagInTagsMenu"] {
 
 
 
-.tagSection {
-  margin-left: 8px;
-  margin-top: 100px;
-  float:left;
-
-}
-
 .showRecipesSection{
   width: 1000px;
   height: 100%;
@@ -111,25 +104,36 @@ button[name="tagInTagsMenu"] {
   float:left;
   text-align:center;
   margin-right: .3%;
+  display: grid;
+}
+
+.titleAndTagsForRecipeDiv{
+  color: #ec06d9;
+  grid-area: 1 / 1;
+  display: inline-block;
 }
 
 .titleForRecipe{
-  position: absolute;
-  display: inline;
+  text-align: center;
+  margin:auto;
   color:black;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  top:5%;
   z-index:100;
+}
+
+.tagsForRecipeText{
+  position: absolute;
+  display: block;
+  text-align: center;
 }
 
 .recipeImageDiv{
   position: relative;
   text-align: center;
   display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  grid-area: 1 / 1;
 }
 
 .recipeImage{
@@ -142,14 +146,16 @@ button[name="tagInTagsMenu"] {
 }
 
 .editRecipeButton{
-  position: absolute;
-  display: block;
+  /* position: absolute;
+  display: block; */
   z-index:100;
 }
 
-.tagsForRecipeText{
-  position: absolute;
-  display: block;
+.tagSection {
+  margin-left: 8px;
+  margin-top: 100px;
+  float:left;
+
 }
 
 /* THIS STUPID DIV WONT GET VERTICALLY CENTERED - maybe fixed i dunno*/

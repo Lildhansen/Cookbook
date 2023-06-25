@@ -17,14 +17,18 @@ tagsFromModel = Tag.objects.all()
 tags = []
 recipes = Recipe.objects.all()
 
+#maybe add a version of this for recipes if things go badly
 def loadTagsFromModel():
     tagsFromModel = Tag.objects.all()#Here we load the tags from the model (different from their representation on the frontend)
     for tag in tagsFromModel:
         if (util.findTagByTagName(tag.name,tags) == None): #the tag is not in the list
             tags.append(TagInAllTagsList(tag.name))
     
+
+
 def main(request):
     loadTagsFromModel()
+    recipes = Recipe.objects.all()
     context = {'myTags':tags, 'myRecipes':recipes}
     return render(request, 'index.html',context)
 

@@ -98,7 +98,7 @@
             {% endif %}
 
                 <div class="recipeDiv">
-                    {% if not recipe.isBeingEditted %}
+                    {% if not recipe.isBeingEdited %}
                         <form action="/editRecipe"  method="POST">
                             {% csrf_token %}
                             <button class="editRecipeButton" name="recipeId" value="{{ recipe.id }}">edit</button>
@@ -120,7 +120,19 @@
                             </p>
                         </div>
                     {% else %}
-                        edit this shit
+                        <form>
+                            <input class="inputsForStuffToChangeOnRecipe" type="text" title="change recipe name" name="nameOfRecipeToEdit" id="nameOfRecipeToEdit" placeholder="{{ recipe.name }}">
+                            <input class="inputsForStuffToChangeOnRecipe" type="url" title="change recipe link" name="linkOfRecipeToEdit" id="linkOfRecipeToEdit" placeholder="{{ recipe.link }}">
+                            <input class="inputsForStuffToChangeOnRecipe" type="url" title="change recipe image" name="imageOfRecipeToEdit" id="imageOfRecipeToEdit" placeholder="{{ recipe.image }}">
+                            <select class="select" multiple class="chosen-select" multiple>
+                            {% for tag in recipe.tagNames.all %}
+                                <option value = "{{ tag }}">{{ tag }}</option>
+                                <!--use this guys stuff instead: https://stackoverflow.com/questions/19206919/how-to-create-checkbox-inside-dropdown
+                                eller brug jquery plugin like this: https://multiple-select.wenzhixin.net.cn/docs/en/download.html-->
+                            {% endfor %}
+                            </select>
+                            <button>save recipe</button>
+                        </form>
                     {% endif %}
                 </div>
             {% if forloop.counter0|modulo:3 == 2 or forloop.last %}
@@ -137,7 +149,7 @@
             {% csrf_token %}
             <!--this input must be santized-->
             <input type="text" name="nameOfRecipeToAdd" id="nameOfRecipeToAdd" placeholder="name of recipe" required>
-            <input type="text" name="imageOfRecipeToAdd" id="imageOfRecipeToAdd" placeholder="link to image of recipe">
+            <input type="url" name="imageOfRecipeToAdd" id="imageOfRecipeToAdd" placeholder="link to image of recipe">
             <div class="associatedTagsForRecipeToAddDiv">
                 <h4 id="tagsForRecipe">Selected Tags for recipe:</h4>
                 {% csrf_token %}

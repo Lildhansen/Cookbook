@@ -15,7 +15,7 @@ class Recipe(models.Model):
     dateAdded = models.DateField(default=False)
     
     #used by site
-    isBeingEditted = models.BooleanField()
+    isBeingEdited = models.BooleanField()
     def __str__(self):
         return self.name
 

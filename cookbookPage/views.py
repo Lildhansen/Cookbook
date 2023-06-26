@@ -75,7 +75,7 @@ def addRecipe(request):
         imageOfRecipeToAdd = util.noImageStockPhoto
     tagsToAddToRecipe = request.POST.getlist("tagsToAddToRecipe")
     today = datetime.today().strftime('%Y-%m-%d')
-    recipe = Recipe.objects.create(name=nameOfRecipeToAdd,link=linkOfRecipeToAdd,image=imageOfRecipeToAdd,dateAdded=today)
+    recipe = Recipe.objects.create(name=nameOfRecipeToAdd,link=linkOfRecipeToAdd,image=imageOfRecipeToAdd,dateAdded=today,isBeingEdited=False)
     print(recipe.image)
     for tag in tagsToAddToRecipe:  
         recipe.tagNames.add(Tag.objects.get(name=tag))   
@@ -87,6 +87,6 @@ def showRecipe(request):
 def editRecipe(request):
     recipeId = request.POST.get("recipeId") 
     recipe = Recipe.objects.get(pk=recipeId)
-    recipe.isBeingEditted = True
+    recipe.isBeingEdited = True
     recipe.save()
     return redirect("/")

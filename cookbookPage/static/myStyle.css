@@ -151,12 +151,24 @@ button[name="tagInTagsMenu"] {
   width: 100%;
 }
 
+.editRecipeTextFields{
+  width:98%;
+  height: 98%;
+}
+
+
 .tagSection {
   margin-left: 8px;
   margin-top: 100px;
   float:left;
   max-width: 10%;
 
+}
+
+.inputsForStuffToChangeOnRecipe{
+  width:100%;
+  height:25%;
+  box-sizing: border-box
 }
 
 /* THIS STUPID DIV WONT GET VERTICALLY CENTERED - maybe fixed i dunno*/
@@ -207,6 +219,4 @@ button[name="tagInTagsMenu"] {
 #tagsForRecipe {
   margin-top: 0px;
   margin-bottom: 0px;
-
-
 }

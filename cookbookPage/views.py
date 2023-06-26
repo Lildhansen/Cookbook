@@ -85,6 +85,8 @@ def showRecipe(request):
     pass
 
 def editRecipe(request):
-    recipeName = request.POST.get("editRecipeButton")
-    print(recipeName)
+    recipeId = request.POST.get("recipeId") 
+    recipe = Recipe.objects.get(pk=recipeId)
+    recipe.isBeingEditted = True
+    recipe.save()
     return redirect("/")

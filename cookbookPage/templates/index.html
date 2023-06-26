@@ -96,12 +96,12 @@
             {% if forloop.counter0|modulo:3 == 0 %}
                 <div class="rowOfRecipesDiv">
             {% endif %}
-                    
+
                 <div class="recipeDiv">
                     {% if not recipe.isBeingEditted %}
-                        <form action="editRecipe"  method="POST">
+                        <form action="/editRecipe"  method="POST">
                             {% csrf_token %}
-                            <button class="editRecipeButton" name="editRecipeButton" value="{{ recipe }}">edit</button>
+                            <button class="editRecipeButton" name="recipeId" value="{{ recipe.id }}">edit</button>
                         </form>
                         <div class="recipeImageDiv">
                             <a href="{{ recipe.link }}" target="_blank"><img class="recipeImage" src="{{ recipe.image }}"></a>

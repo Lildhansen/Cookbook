@@ -81,5 +81,10 @@ def addRecipe(request):
         recipe.tagNames.add(Tag.objects.get(name=tag))   
     return redirect("/")
 
-def showRecipe():
+def showRecipe(request):
     pass
+
+def editRecipe(request):
+    recipeName = request.POST.get("editRecipeButton")
+    print(recipeName)
+    return redirect("/")

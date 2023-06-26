@@ -148,6 +148,7 @@ button[name="tagInTagsMenu"] {
   /* position: absolute;
   display: block; */
   z-index:100;
+  width: 100%;
 }
 
 .tagSection {

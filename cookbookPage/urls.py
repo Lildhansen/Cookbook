@@ -13,5 +13,6 @@ urlpatterns = [
     
     #recipe stuff:
     path('addRecipe', views.addRecipe, name="addRecipe"),
+    path('editRecipe', views.editRecipe, name="editRecipe"),
     
 ]

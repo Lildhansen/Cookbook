@@ -5,6 +5,7 @@
 
 <head>
     <link rel="stylesheet" href="{% static 'myStyle.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/multiple-select@1.6.0/dist/multiple-select.min.css">
     <script src="{% static 'index.js' %}"></script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -121,14 +122,20 @@
                         </div>
                     {% else %}
                         <form>
-                            <input class="inputsForStuffToChangeOnRecipe" type="text" title="change recipe name" name="nameOfRecipeToEdit" id="nameOfRecipeToEdit" placeholder="{{ recipe.name }}">
-                            <input class="inputsForStuffToChangeOnRecipe" type="url" title="change recipe link" name="linkOfRecipeToEdit" id="linkOfRecipeToEdit" placeholder="{{ recipe.link }}">
-                            <input class="inputsForStuffToChangeOnRecipe" type="url" title="change recipe image" name="imageOfRecipeToEdit" id="imageOfRecipeToEdit" placeholder="{{ recipe.image }}">
-                            <select class="select" multiple class="chosen-select" multiple>
-                            {% for tag in recipe.tagNames.all %}
-                                <option value = "{{ tag }}">{{ tag }}</option>
-                                <!--use this guys stuff instead: https://stackoverflow.com/questions/19206919/how-to-create-checkbox-inside-dropdown
-                                eller brug jquery plugin like this: https://multiple-select.wenzhixin.net.cn/docs/en/download.html-->
+                            <p class="titleForChangingStuffForRecipe">Change name for recipe:</p>
+                            <input class="inputsForStuffToChangeOnRecipe" type="text" title="change recipe name" name="nameOfRecipeToEdit" id="nameOfRecipeToEdit" value="{{ recipe.name }}">
+                            <p class="titleForChangingStuffForRecipe">Change link for recipe::</p>
+                            <input class="inputsForStuffToChangeOnRecipe" type="url" title="change recipe link" name="linkOfRecipeToEdit" id="linkOfRecipeToEdit" value="{{ recipe.link }}">
+                            <p class="titleForChangingStuffForRecipe">Change image for recipe:</p>
+                            <input class="inputsForStuffToChangeOnRecipe" type="url" title="change recipe image" name="imageOfRecipeToEdit" id="imageOfRecipeToEdit" value="{{ recipe.image }}">
+                            <p class="titleForChangingStuffForRecipe">Add/remove tags from recipe:</p>
+                            <select multiple="multiple">
+                            {% for tag in myTags %}
+                                {% if tag in recipe.tagNames.all %}
+                                    <option value="{{ tag }}" selected>{{ tag }}</option>
+                                {% else %}
+                                    <option value="{{ tag }}">{{ tag }}</option>
+                                {% endif %}
                             {% endfor %}
                             </select>
                             <button>save recipe</button>
@@ -163,6 +170,13 @@
 
         <h4>or add it some other way: </h4> <!--epicR stuff and also maybe from txt/docx file-->
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/multiple-select@1.6.0/dist/multiple-select.min.js"></script>
+    <script>
+      $(function () {
+        $('select').multipleSelect()
+      })
+    </script>
 </body>
 
 </html>

@@ -6,6 +6,12 @@ class Tag(models.Model):
     recipeNames = models.ManyToManyField("Recipe")
     def __str__(self):
         return self.name
+    def __hash__(self):
+        return hash(self.name)
+    def __eq__(self, other):
+        if not hasattr(other, "name"):
+            return False
+        return self.name == other.name
     
 class Recipe(models.Model):
     name = models.CharField(max_length=200)

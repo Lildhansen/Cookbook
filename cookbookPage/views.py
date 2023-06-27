@@ -17,6 +17,7 @@ tagsFromModel = Tag.objects.all()
 tags = []
 recipes = Recipe.objects.all()
 
+
 #maybe add a version of this for recipes if things go badly
 def loadTagsFromModel():
     tagsFromModel = Tag.objects.all()#Here we load the tags from the model (different from their representation on the frontend)
@@ -25,6 +26,10 @@ def loadTagsFromModel():
             tags.append(TagInAllTagsList(tag.name))
     
 
+    ### need some way to handle such that when refreshing page all pages are set to recipe.isBeingEdited = False (not doing this)
+    ### need to add reset to default button instead (maybe also reset all recipes to default - and do recipe.isBeingEdited = False for them all)
+            ### måske skal det heddet "undo changes" i stedet 
+    ### maybe make such that 1 recipe can only be edited at a time (though this requires that we prompt the user to lose progress in the other one and such)
 
 def main(request):
     loadTagsFromModel()
@@ -105,12 +110,9 @@ def saveEditedRecipe(request):
         recipe.link = linkOfRecipeToEdit
     if recipe.image != imageOfRecipeToEdit:
         recipe.image = imageOfRecipeToEdit
-    print(tagsOfRecipeToEdit, recipe.tagNames.all())
     if recipe.tagNames != tagsOfRecipeToEdit:
         recipe.tagNames.set(tagsOfRecipeToEdit)
-    print(recipe.tagNames.all())
     recipe.isBeingEdited = False
     recipe.save()
-    
     
     return redirect("/")

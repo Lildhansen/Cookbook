@@ -91,8 +91,14 @@
         <!-- der skal være en eller anden toggle ("recipe must have all tags") eller lign. for om recipes'ne skal vises hvor de opfylder alle tags, 
             eller hvor blot de kan have en af det tags (så basically om or eller and) -->
     </div>
-    
     <div class="showRecipesSection">
+        <!--this button could also be in the top bar-->
+        {% if myRecipes|anyRecipeIsBeingEdited %}
+            <form action="/exitEditingAllRecipes"  method="POST">
+                {% csrf_token %}
+                <button class="exitEditingAllRecipes">Exit editing for all recipes</button>
+            </form>
+        {% endif %}
         {% for recipe in myRecipes %}
             {% if forloop.counter0|modulo:3 == 0 %}
                 <div class="rowOfRecipesDiv">
@@ -140,7 +146,18 @@
                             {% endfor %}
                             </select>
                             <input type="hidden" name="idOfRecipeToEdit" value="{{recipe.id}}">
-                            <button>save recipe</button>
+                            <br>
+                            <br>
+                            <button>Save recipe and exit editing</button>
+                        </form>
+                        <form action=""  method="POST">
+                            {% csrf_token %}
+                            <button>Undo changes</button>
+                        </form>
+                        <form action="/exitEditing"  method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="idOfRecipeToEdit" value="{{recipe.id}}">
+                            <button>Exit editing</button>
                         </form>
                     {% endif %}
                 </div>

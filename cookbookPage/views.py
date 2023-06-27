@@ -115,4 +115,18 @@ def saveEditedRecipe(request):
     recipe.isBeingEdited = False
     recipe.save()
     
+    return redirect("/") #i guess den kunne returne forskellige redirects (som afgør om den skal resette alle til non-edit mode)
+
+def exitEditing(request):
+    idOfRecipeToEdit = request.POST.get("idOfRecipeToEdit")
+    recipe = Recipe.objects.get(pk=idOfRecipeToEdit)
+    recipe.isBeingEdited = False
+    recipe.save()
+    return redirect("/")
+
+def exitEditingAllRecipes(request):
+    recipes = Recipe.objects.all()
+    for recipe in recipes:
+        recipe.isBeingEdited = False
+        recipe.save()
     return redirect("/")

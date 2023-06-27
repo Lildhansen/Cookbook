@@ -176,6 +176,10 @@ button[name="tagInTagsMenu"] {
   margin-top: 5px;
 }
 
+.exitEditingAllRecipes {
+  text-align: center;
+}
+
 /* THIS STUPID DIV WONT GET VERTICALLY CENTERED - maybe fixed i dunno*/
 #typeOfSearchSelectionDiv {
   top:15px;

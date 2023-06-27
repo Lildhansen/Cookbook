@@ -90,3 +90,27 @@ def editRecipe(request):
     recipe.isBeingEdited = True
     recipe.save()
     return redirect("/")
+
+def saveEditedRecipe(request):
+    nameOfRecipeToEdit = request.POST.get("nameOfRecipeToEdit")
+    linkOfRecipeToEdit = request.POST.get("linkOfRecipeToEdit")
+    imageOfRecipeToEdit = request.POST.get("imageOfRecipeToEdit")
+    tagsOfRecipeToEdit = request.POST.getlist("tagsOfRecipeToEdit")
+    idOfRecipeToEdit = request.POST.get("idOfRecipeToEdit")
+    
+    recipe = Recipe.objects.get(pk=idOfRecipeToEdit)
+    if recipe.name != nameOfRecipeToEdit:
+        recipe.name = nameOfRecipeToEdit
+    if recipe.link != linkOfRecipeToEdit:
+        recipe.link = linkOfRecipeToEdit
+    if recipe.image != imageOfRecipeToEdit:
+        recipe.image = imageOfRecipeToEdit
+    print(tagsOfRecipeToEdit, recipe.tagNames.all())
+    if recipe.tagNames != tagsOfRecipeToEdit:
+        recipe.tagNames.set(tagsOfRecipeToEdit)
+    print(recipe.tagNames.all())
+    recipe.isBeingEdited = False
+    recipe.save()
+    
+    
+    return redirect("/")

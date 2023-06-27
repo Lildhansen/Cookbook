@@ -5,6 +5,7 @@
 
 <head>
     <link rel="stylesheet" href="{% static 'myStyle.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/multiple-select@1.6.0/dist/multiple-select.min.css">
     <script src="{% static 'index.js' %}"></script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -90,31 +91,75 @@
         <!-- der skal være en eller anden toggle ("recipe must have all tags") eller lign. for om recipes'ne skal vises hvor de opfylder alle tags, 
             eller hvor blot de kan have en af det tags (så basically om or eller and) -->
     </div>
-    
     <div class="showRecipesSection">
+        <!--this button could also be in the top bar-->
+        {% if myRecipes|anyRecipeIsBeingEdited %}
+            <form action="/exitEditingAllRecipes"  method="POST">
+                {% csrf_token %}
+                <button class="exitEditingAllRecipes">Exit editing for all recipes</button>
+            </form>
+        {% endif %}
         {% for recipe in myRecipes %}
             {% if forloop.counter0|modulo:3 == 0 %}
                 <div class="rowOfRecipesDiv">
             {% endif %}
 
                 <div class="recipeDiv">
-                    <button class="editRecipeButton">edit</button>
-                    <div class="recipeImageDiv">
-                        <a href="{{ recipe.link }}" target="_blank"><img class="recipeImage" src="{{ recipe.image }}"></a>
-                    </div>
-                    <div class="titleAndTagsForRecipeDiv">
-                        <h1 class="titleForRecipe">{{ recipe }}</h1>
-                        <p class="tagsForRecipeText">
-                            Tags: 
-                            {% for tag in recipe.tagNames.all %}
-                                {{ tag}}
-                                {% if not forloop.last %}
-                                    ,
+                    {% if not recipe.isBeingEdited %}
+                        <form action="/editRecipe"  method="POST">
+                            {% csrf_token %}
+                            <button class="editRecipeButton" name="recipeId" value="{{ recipe.id }}">edit</button>
+                        </form>
+                        <div class="recipeImageDiv">
+                            <a href="{{ recipe.link }}" target="_blank"><img class="recipeImage" src="{{ recipe.image }}"></a>
+                        </div>
+                        <div class="titleAndTagsForRecipeDiv">
+                            <h1 class="titleForRecipe">{{ recipe }}</h1>
+                            <p class="tagsForRecipeText">
+                                Tags: 
+                                {% for tag in recipe.tagNames.all %}
+                                    {{ tag}}
+                                    {% if not forloop.last %}
+                                        ,
+                                    {% endif %}
+                                {% endfor %}
+
+                            </p>
+                        </div>
+                    {% else %}
+                        <form action="/saveEditedRecipe"  method="POST">
+                            {% csrf_token %}
+                            <p class="titleForChangingStuffForRecipe">Change name for recipe:</p>
+                            <input class="inputsForStuffToChangeOnRecipe" type="text" title="change recipe name" name="nameOfRecipeToEdit" id="nameOfRecipeToEdit" value="{{ recipe.name }}">
+                            <p class="titleForChangingStuffForRecipe">Change link for recipe::</p>
+                            <input class="inputsForStuffToChangeOnRecipe" type="url" title="change recipe link" name="linkOfRecipeToEdit" id="linkOfRecipeToEdit" value="{{ recipe.link }}">
+                            <p class="titleForChangingStuffForRecipe">Change image for recipe:</p>
+                            <input class="inputsForStuffToChangeOnRecipe" type="url" title="change recipe image" name="imageOfRecipeToEdit" id="imageOfRecipeToEdit" value="{{ recipe.image }}">
+                            <p class="titleForChangingStuffForRecipe">Add/remove tags from recipe:</p>
+                            <select multiple="multiple" name="tagsOfRecipeToEdit">
+                            {% for tag in myTags %}
+                                {% if tag in recipe.tagNames.all %}
+                                    <option value="{{ tag }}" selected>{{ tag }}</option>
+                                {% else %}
+                                    <option value="{{ tag }}">{{ tag }}</option>
                                 {% endif %}
                             {% endfor %}
-
-                        </p>
-                    </div>
+                            </select>
+                            <input type="hidden" name="idOfRecipeToEdit" value="{{recipe.id}}">
+                            <br>
+                            <br>
+                            <button>Save recipe and exit editing</button>
+                        </form>
+                        <form action=""  method="POST">
+                            {% csrf_token %}
+                            <button>Undo changes</button>
+                        </form>
+                        <form action="/exitEditing"  method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="idOfRecipeToEdit" value="{{recipe.id}}">
+                            <button>Exit editing</button>
+                        </form>
+                    {% endif %}
                 </div>
             {% if forloop.counter0|modulo:3 == 2 or forloop.last %}
                 </div>
@@ -130,7 +175,7 @@
             {% csrf_token %}
             <!--this input must be santized-->
             <input type="text" name="nameOfRecipeToAdd" id="nameOfRecipeToAdd" placeholder="name of recipe" required>
-            <input type="text" name="imageOfRecipeToAdd" id="imageOfRecipeToAdd" placeholder="link to image of recipe">
+            <input type="url" name="imageOfRecipeToAdd" id="imageOfRecipeToAdd" placeholder="link to image of recipe">
             <div class="associatedTagsForRecipeToAddDiv">
                 <h4 id="tagsForRecipe">Selected Tags for recipe:</h4>
                 {% csrf_token %}
@@ -144,6 +189,13 @@
 
         <h4>or add it some other way: </h4> <!--epicR stuff and also maybe from txt/docx file-->
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/multiple-select@1.6.0/dist/multiple-select.min.js"></script>
+    <script>
+      $(function () {
+        $('select').multipleSelect()
+      })
+    </script>
 </body>
 
 </html>

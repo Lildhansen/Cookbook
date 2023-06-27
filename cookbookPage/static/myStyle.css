@@ -148,7 +148,14 @@ button[name="tagInTagsMenu"] {
   /* position: absolute;
   display: block; */
   z-index:100;
+  width: 100%;
 }
+
+.editRecipeTextFields{
+  width:98%;
+  height: 98%;
+}
+
 
 .tagSection {
   margin-left: 8px;
@@ -156,6 +163,21 @@ button[name="tagInTagsMenu"] {
   float:left;
   max-width: 10%;
 
+}
+
+.inputsForStuffToChangeOnRecipe{
+  width:100%;
+  box-sizing: border-box
+}
+
+.titleForChangingStuffForRecipe {
+  float:left;
+  margin:auto;
+  margin-top: 5px;
+}
+
+.exitEditingAllRecipes {
+  text-align: center;
 }
 
 /* THIS STUPID DIV WONT GET VERTICALLY CENTERED - maybe fixed i dunno*/
@@ -206,6 +228,4 @@ button[name="tagInTagsMenu"] {
 #tagsForRecipe {
   margin-top: 0px;
   margin-bottom: 0px;
-
-
 }

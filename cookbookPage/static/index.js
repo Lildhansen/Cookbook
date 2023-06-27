@@ -1,3 +1,5 @@
+//tag stuff
+
 function updateSearch(searchBarValue)
 {
     allTagElements = document.getElementsByClassName("tagElement")
@@ -11,7 +13,7 @@ function updateSearch(searchBarValue)
     }
 }
 
-function test(tagValue)
+function sendDeleteTagHTTP(tagValue)
 {
     var csrftoken = getCookie('csrftoken')
     fetch('deleteTag', {
@@ -41,10 +43,11 @@ function removeTag(removeSymbolDivForTagToRemove)
     console.log(tagValue)
     if (window.confirm(`Are you sure you want to delete the, ${tagValue}, tag`))
     {
-        return test(tagValue)      
+        return sendDeleteTagHTTP(tagValue)      
     }
 }
 
+// should probably be named santize tag input or smth
 function verifyTagIsUnique(newTagNameForm)
 {
     invalidChars = ['/', '%', '&', '<', '>', '[', ']', '{', '}', ']', '\\','\'','"']
@@ -88,4 +91,11 @@ function stringContainsInvalidCharacters(myString,invalidChars)
         }
     });
     return match
+}
+
+
+//recipe stuff
+function editRecipe(recipe)
+{
+    console.log(recipe.value)
 }

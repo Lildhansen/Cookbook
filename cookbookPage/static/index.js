@@ -102,8 +102,33 @@ function updateSearch(searchBar)
     searchBarValue = searchBar.value.toLowerCase() //search should be case insensitive
     typeOfSearch = document.getElementById("typeOfSearchSelection")
     allRecipeElements = document.getElementsByClassName("recipeDiv")
-
     if (typeOfSearch.value == "recipes")
+    {
+        console.log(allRecipeElements.length)
+        for (const recipeElement of allRecipeElements)
+        {
+            recipeElement.style.display = "grid"
+            //if recipe is being edited they should always be shown
+            if (recipeIsBeingEdited(recipeElement))
+            {
+                console.log("edit")
+                recipeElement.style.display = "grid"
+            }
+
+            else 
+            {
+                console.log("recipe: ",recipeElement.getElementsByClassName("titleForRecipe")[0])
+                recipeName = recipeElement.getElementsByClassName("titleForRecipe")[0].innerHTML.toLowerCase()
+                if (!recipeName.includes(searchBarValue))
+                    recipeElement.style.display = "none"
+
+            }
+        }
+
+        console.log(allRecipeElements)
+    }
+
+    else if (typeOfSearch.value == "tags")
     {
         for (const recipeElement of allRecipeElements)
         {
@@ -114,17 +139,10 @@ function updateSearch(searchBar)
                 recipeElement.style.display = "grid"
                 continue
             }
-            recipeName = recipeElement.getElementsByClassName("titleForRecipe")[0].innerHTML.toLowerCase()
-            if (!recipeName.includes(searchBarValue))
+            tagNames = recipeElement.getElementsByClassName("tagsForRecipeText")[0].innerHTML.toLowerCase()
+            if (!tagNames.includes(searchBarValue))
                 recipeElement.style.display = "none"
         }
-
-        console.log(allRecipeElements)
-    }
-
-    else if (typeOfSearch.value == "tags")
-    {
-        //if recipe is being edited they should always be shown
     }
 
     // allTagElementsCopy = [...allTagElements]
@@ -137,9 +155,38 @@ function updateSearch(searchBar)
     // }
 }
 
+//handles updating the suggested search results
+function changeTypeOfSearchSelection(typeOfSearchSelection)
+{
+    if (typeOfSearchSelection.value == "tags")
+    {
+        allTagElements = document.getElementsByClassName("tagElement")
+        for (tagElement of allTagElements)
+        {
+            tagValue = tagElement.getElementsByClassName("tagInTagsMenu")[0].value.toLowerCase()
+            option = document.createElement('option');
+            option.value = tagValue;
+            
+            searchBarSuggestions = document.getElementById("searchBarSuggestions")
+            searchBarSuggestions.appendChild(option)   
+        }
+    }
+
+    else if (typeOfSearchSelection.value == "recipes")
+    {
+        searchBarSuggestions = document.getElementById("searchBarSuggestions")
+        while (searchBarSuggestions.firstChild) 
+        {
+            searchBarSuggestions.removeChild(searchBarSuggestions.lastChild);
+        }   
+    }
+    
+}
+
+
 function recipeIsBeingEdited(recipeDiv)
 {
-    return recipeDiv.getElementsByClassName("titleAndTagsForRecipeDiv") == []
+    return recipeDiv.getElementsByClassName("titleAndTagsForRecipeDiv").length == 0
 }
 
 function editRecipe(recipe)

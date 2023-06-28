@@ -39,7 +39,8 @@ button[name="tagInTagsMenu"] {
   
 }
 
-#topBarSearchBar {
+
+#topBarSearchBarDiv {
   float: none;
   position: absolute;
   top: 50%;

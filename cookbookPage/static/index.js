@@ -49,7 +49,7 @@ function removeTag(removeSymbolDivForTagToRemove)
 }
 
 // should probably be named santize tag input or smth
-function verifyTagIsUnique(newTagNameForm)
+function verifyTag(newTagNameForm)
 {
     invalidChars = ['/', '%', '&', '<', '>', '[', ']', '{', '}', ']', '\\','\'','"']
     allTagElements = document.getElementsByClassName("tagElement")
@@ -59,6 +59,14 @@ function verifyTagIsUnique(newTagNameForm)
     if (newTagName == "")
     {
         alert("tag cannot be empty")
+        newTagNameForm.querySelector('input[name="addTagInput"]').value = ""
+        return false
+    }
+
+    else if (newTagName.length > 25)
+    {
+        alert("tag cannot be longer than 25 characters")
+        newTagNameForm.querySelector('input[name="addTagInput"]').value = ""
         return false
     }
     else if (stringContainsInvalidCharacters(newTagName,invalidChars))

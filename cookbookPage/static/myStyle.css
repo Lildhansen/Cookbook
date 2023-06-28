@@ -32,6 +32,11 @@ button[name="tagInTagsMenu"] {
     margin:0px;
     border-bottom: 3px solid black;
     z-index: 200;
+    overflow:visible
+}
+
+.topBarOption{
+  
 }
 
 #topBarSearchBar {
@@ -56,7 +61,6 @@ button[name="tagInTagsMenu"] {
   top: 50%;
   left: 70%;
   transform: translate(-50%, -50%);
-  display: inline;
   width: 200px;
 }
 
@@ -182,10 +186,9 @@ button[name="tagInTagsMenu"] {
 
 /* THIS STUPID DIV WONT GET VERTICALLY CENTERED - maybe fixed i dunno*/
 #typeOfSearchSelectionDiv {
-  top:15px;
+  top:12px;
   float:right;
   vertical-align: middle; 
-  overflow:hidden;
   position:relative;
 }
 

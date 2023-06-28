@@ -16,7 +16,7 @@
 
     <div class="topBar"> <!-- pt er det mere tags der bare skal flyttes længere ned-->
         <div class="topBarOption" id="topBarSearchBar">
-            <input type="search" placeholder="recipe ...">
+            <input type="search" placeholder="recipe ..." oninput="updateSearch(this)">
             <!-- this placeholder should be changed when changing #topBarTypeOfSearch -->
         </div>
         <div class="topBarOption" id="topBarFilterSelection">
@@ -34,8 +34,8 @@
             <div id="typeOfSearchSelectionDiv">
                 <select id="typeOfSearchSelection" onchange="">
                     <!--would be nice if this could be handled by js-->
-                    <option>recipes</option>
-                    <option>tags</option>
+                    <option value="recipes">recipes</option>
+                    <option value="tags">tags</option>
                 </select>
             </div>
         </div>
@@ -44,7 +44,7 @@
     <div class="tagSection">
         <div class="searchBarDiv">
             <input name="searchBar" type="search" id="searchBarAllTags" class="searchBar" placeholder="search tag ..."
-                oninput="updateSearch(this.value)" />
+                oninput="updateTagSearch(this.value)" />
         </div>
         <div class="allTagsDiv">
             {% for tag in myTags %}
@@ -115,7 +115,7 @@
                             <a href="{{ recipe.link }}" target="_blank"><img class="recipeImage" src="{{ recipe.image }}"></a>
                         </div>
                         <div class="titleAndTagsForRecipeDiv">
-                            <h1 class="titleForRecipe">{{ recipe }}</h1>
+                            <h1 class="titleForRecipe" value="{{ recipe }}">{{ recipe }}</h1>
                             <p class="tagsForRecipeText">
                                 Tags: 
                                 {% for tag in recipe.tagNames.all %}

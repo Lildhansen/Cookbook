@@ -1,13 +1,14 @@
 //tag stuff
 
-function updateSearch(searchBarValue)
+function updateTagSearch(searchBarValue)
 {
+    searchBarValue = searchBarValue.toLowerCase() //search should be case insensitive
     allTagElements = document.getElementsByClassName("tagElement")
     allTagElementsCopy = [...allTagElements]
     for (const tag of allTagElementsCopy)
     {
         tag.style.display = "inline-block"
-        tagName = tag.querySelector('button[name="tagInTagsMenu"]').value
+        tagName = tag.querySelector('button[name="tagInTagsMenu"]').value.toLowerCase()
         if (!tagName.includes(searchBarValue))
             tag.style.display = "none"
     }
@@ -95,6 +96,52 @@ function stringContainsInvalidCharacters(myString,invalidChars)
 
 
 //recipe stuff
+
+function updateSearch(searchBar)
+{
+    searchBarValue = searchBar.value.toLowerCase() //search should be case insensitive
+    typeOfSearch = document.getElementById("typeOfSearchSelection")
+    allRecipeElements = document.getElementsByClassName("recipeDiv")
+
+    if (typeOfSearch.value == "recipes")
+    {
+        for (const recipeElement of allRecipeElements)
+        {
+            recipeElement.style.display = "grid"
+            //if recipe is being edited they should always be shown
+            if (recipeIsBeingEdited(recipeElement))
+            {
+                recipeElement.style.display = "grid"
+                continue
+            }
+            recipeName = recipeElement.getElementsByClassName("titleForRecipe")[0].innerHTML.toLowerCase()
+            if (!recipeName.includes(searchBarValue))
+                recipeElement.style.display = "none"
+        }
+
+        console.log(allRecipeElements)
+    }
+
+    else if (typeOfSearch.value == "tags")
+    {
+        //if recipe is being edited they should always be shown
+    }
+
+    // allTagElementsCopy = [...allTagElements]
+    // for (const tag of allTagElementsCopy)
+    // {
+    //     tag.style.display = "inline-block"
+    //     tagName = tag.querySelector('button[name="tagInTagsMenu"]').value
+    //     if (!tagName.includes(searchBarValue))
+    //         tag.style.display = "none"
+    // }
+}
+
+function recipeIsBeingEdited(recipeDiv)
+{
+    return recipeDiv.getElementsByClassName("titleAndTagsForRecipeDiv") == []
+}
+
 function editRecipe(recipe)
 {
     console.log(recipe.value)

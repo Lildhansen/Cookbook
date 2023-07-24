@@ -78,7 +78,6 @@ button[name="tagInTagsMenu"] {
   width: 1000px;
   height: 100%;
   margin-top: 100px;
-  background-color: red;
   
   position: absolute;
   top:0;
@@ -98,14 +97,12 @@ button[name="tagInTagsMenu"] {
   margin:auto;
   display: block;
   margin-top: 20px;
-  background-color: blue;
 }
 
 .recipeDiv{
   width:33%;
   height: 100%;
   position: relative;
-  background-color: green;
   float:left;
   text-align:center;
   margin-right: .3%;
@@ -123,13 +120,15 @@ button[name="tagInTagsMenu"] {
   text-align: center;
   margin:auto;
   color:black;
-  z-index:100;
+  position: relative;
+  z-index:10000;
 }
 
 .tagsForRecipeText{
   position: absolute;
   display: block;
   text-align: center;
+  background-color: white;
 }
 
 .recipeImageDiv{
@@ -156,6 +155,10 @@ button[name="tagInTagsMenu"] {
   display: block; */
   z-index:100;
   width: 100%;
+}
+
+.deleteRecipeButton {
+  z-index:100;
 }
 
 .editRecipeTextFields{

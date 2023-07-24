@@ -14,6 +14,12 @@ function updateTagSearch(searchBarValue)
     }
 }
 
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
 function sendDeleteTagHTTP(tagValue)
 {
     var csrftoken = getCookie('csrftoken')
@@ -28,11 +34,20 @@ function sendDeleteTagHTTP(tagValue)
 })
 }
 
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-  }
+
+function sendDeleteRecipeHTTP(idOfRecipeToDelete)
+{
+    var csrftoken = getCookie('csrftoken')
+    fetch('deleteRecipe', {
+    method: 'POST',
+    action: 'deleteRecipe',
+    headers: {
+        "X-Requested-With": "XMLHttpRequest",
+        "X-CSRFToken": csrftoken,
+    },
+    body: idOfRecipeToDelete
+})
+}
 
 
 
@@ -45,6 +60,19 @@ function removeTag(removeSymbolDivForTagToRemove)
     if (window.confirm(`Are you sure you want to delete the, ${tagValue}, tag`))
     {
         return sendDeleteTagHTTP(tagValue)      
+    }
+}
+
+function removeRecipe(recipeId, recipeElement)
+{
+    console.log(recipeId)
+    recipeTitleAndTags = recipeElement.querySelector('.titleAndTagsForRecipeDiv')
+    recipeTitleElement = recipeTitleAndTags.querySelector('.titleForRecipe')
+    recipeTitle = recipeTitleElement.innerHTML
+    console.log(recipeTitle)
+    if (window.confirm(`Are you sure you want to delete the recipe, ${recipeTitle}`))
+    {
+        return sendDeleteRecipeHTTP(recipeId)      
     }
 }
 

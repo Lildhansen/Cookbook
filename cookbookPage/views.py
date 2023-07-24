@@ -96,6 +96,11 @@ def editRecipe(request):
     recipe.save()
     return redirect("/")
 
+def deleteRecipe(request):
+    recipeId = request.body.decode('utf-8')
+    Recipe.objects.filter(id=recipeId).delete()
+    return redirect("/")
+
 def saveEditedRecipe(request):
     nameOfRecipeToEdit = request.POST.get("nameOfRecipeToEdit")
     linkOfRecipeToEdit = request.POST.get("linkOfRecipeToEdit")

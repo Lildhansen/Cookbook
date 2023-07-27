@@ -13,28 +13,34 @@ from .models import Recipe
 from .classes.TagInAllTagsList import TagInAllTagsList
 from .util import utility as util
 
-tagsFromModel = Tag.objects.all()
 tags = []
-recipes = Recipe.objects.all()
-
+filterBy = "dateAddedDescending"
 
 #maybe add a version of this for recipes if things go badly
 def loadTagsFromModel():
-    tagsFromModel = Tag.objects.all()#Here we load the tags from the model (different from their representation on the frontend)
+    tagsFromModel = Tag.objects.all() #Here we load the tags from the model (different from their representation on the frontend)
     for tag in tagsFromModel:
         if (util.findTagByTagName(tag.name,tags) == None): #the tag is not in the list
             tags.append(TagInAllTagsList(tag.name))
-    
 
     ### need some way to handle such that when refreshing page all pages are set to recipe.isBeingEdited = False (not doing this)
     ### need to add reset to default button instead (maybe also reset all recipes to default - and do recipe.isBeingEdited = False for them all)
             ### måske skal det heddet "undo changes" i stedet 
     ### maybe make such that 1 recipe can only be edited at a time (though this requires that we prompt the user to lose progress in the other one and such)
 
+def loadRecipesFromModel():
+    if filterBy == "dateAddedDescending":
+        recipes = Recipe.objects.all().order_by('-dateAdded')
+    if filterBy == "dateAddedAscending":
+        recipes = Recipe.objects.all().order_by('dateAdded')
+    if filterBy == "random":
+        recipes = Recipe.objects.all().order_by('?')
+    return recipes
+
 def main(request):
     loadTagsFromModel()
-    recipes = Recipe.objects.all()
-    context = {'myTags':tags, 'myRecipes':recipes}
+    recipes = loadRecipesFromModel()
+    context = {'myTags':tags, 'myRecipes':recipes, 'filterBy':filterBy}
     return render(request, 'index.html',context)
 
 #region tags
@@ -96,6 +102,11 @@ def editRecipe(request):
     recipe.save()
     return redirect("/")
 
+def deleteRecipe(request):
+    recipeId = request.body.decode('utf-8')
+    Recipe.objects.filter(id=recipeId).delete()
+    return redirect("/")
+
 def saveEditedRecipe(request):
     nameOfRecipeToEdit = request.POST.get("nameOfRecipeToEdit")
     linkOfRecipeToEdit = request.POST.get("linkOfRecipeToEdit")
@@ -129,4 +140,10 @@ def exitEditingAllRecipes(request):
     for recipe in recipes:
         recipe.isBeingEdited = False
         recipe.save()
+    return redirect("/")
+
+def filterRecipes(request):
+    filterKey = request.POST.get("FilterSelection")
+    global filterBy
+    filterBy = filterKey 
     return redirect("/")

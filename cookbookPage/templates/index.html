@@ -15,26 +15,49 @@
 <body><!-- måske tags skal være i en sidebar så de ikke fylder så meget -->
 
     <div class="topBar"> <!-- pt er det mere tags der bare skal flyttes længere ned-->
-        <div class="topBarOption" id="topBarSearchBar">
-            <input type="search" placeholder="recipe ...">
-            <!-- this placeholder should be changed when changing #topBarTypeOfSearch -->
+        <div class="wrapper">
+            <div class="topBarOption" id="topBarSearchBarDiv">
+                <input id="searchBarForRecipeOrTag" list="searchBarSuggestions" type="search" placeholder="recipe..." oninput="updateSearch(this)">
+                <datalist id="searchBarSuggestions">
+                    
+                </datalist>
+                <!-- this placeholder should be changed when changing #topBarTypeOfSearch -->
+            </div>
         </div>
-        <div class="topBarOption" id="topBarFilterSelection">
-            <select>
-                <option value="" selected disabled hidden>Filter</option>
-                <option>date added (descending)</option>
-                <option>date added (ascending)</option>
-            </select>
-            <input type="image" src="{% static 'images/deleteTag.png' %}" width="10" height="10">
+        <div class="topBarOption" id="topBarFilterSelectionDiv">
+            <div>
+                <p>Filter by</p>
+            </div>
+            <div id="FilterSelectionDiv">
+                <form action="/filterRecipes"  method="POST">
+                    {% csrf_token %}
+                    <select id="FilterSelection" name="FilterSelection" onchange="this.form.submit();" onload="setCorrectFilteredRecipe(this)">
+                            <!-- surely there is a better way than this but i do not know how-->
+                            {% if filterBy == "dateAddedDescending" %}
+                            <option selected value="dateAddedDescending">Date added (descending)</option>
+                            <option value="dateAddedAscending">Date added (ascending)</option>
+                            <option value="random">Randomly</option>
+                            {% elif filterBy == "dateAddedAscending" %}
+                            <option value="dateAddedDescending">Date added (descending)</option>
+                            <option selected value="dateAddedAscending">Date added (ascending)</option>
+                            <option value="random">Randomly</option>
+                            {% elif filterBy == "random" %}
+                            <option value="dateAddedDescending">Date added (descending)</option>
+                            <option value="dateAddedAscending">Date added (ascending)</option>
+                            <option selected value="random">Randomly</option>
+                            {% endif %}
+                    </select>
+                </form>
+            </div>
         </div>
         <div class="topBarOption" id="topBarTypeOfSearch">
             <div>
-                <p>search for ...</p>
+                <p>Search for ...</p>
             </div>
             <div id="typeOfSearchSelectionDiv">
-                <select id="typeOfSearchSelection">
-                    <option>recipes</option>
-                    <option>tags</option>
+                <select id="typeOfSearchSelection" onchange="return changeTypeOfSearchSelection(this)">
+                    <option value="recipes">recipes</option>
+                    <option value="tags">tags</option>
                 </select>
             </div>
         </div>
@@ -43,7 +66,7 @@
     <div class="tagSection">
         <div class="searchBarDiv">
             <input name="searchBar" type="search" id="searchBarAllTags" class="searchBar" placeholder="search tag ..."
-                oninput="updateSearch(this.value)" />
+                oninput="updateTagSearch(this.value)" />
         </div>
         <div class="allTagsDiv">
             {% for tag in myTags %}
@@ -52,10 +75,10 @@
                     <form action="interactWithTag" method="POST">
                         {% csrf_token %}
                         {% if tag.selected %}
-                        <button name="tagInTagsMenu" type="onclick" value="{{ tag }}"
+                        <button name="tagInTagsMenu" class="tagInTagsMenu" type="onclick" value="{{ tag }}"
                             style="background:fixed; background-color: grey;">{{ tag }}</button>
                         {% else %}
-                        <button name="tagInTagsMenu" type="onclick" value="{{ tag }}"
+                        <button name="tagInTagsMenu" class="tagInTagsMenu" type="onclick" value="{{ tag }}"
                             style="background: none!important;">{{ tag }}</button>
                         {% endif %}
                     </form>
@@ -83,7 +106,7 @@
         </div>
         <div class="addTagsDiv">
             <h5 class="addTagText">Add tag:</h5>
-            <form action="addTag" method="POST" onsubmit="return verifyTagIsUnique(this)">
+            <form action="addTag" method="POST" onsubmit="return verifyTag(this)">
                 {% csrf_token %}
                 <input type="text" name="addTagInput" size="7">
             </form>
@@ -106,15 +129,19 @@
 
                 <div class="recipeDiv">
                     {% if not recipe.isBeingEdited %}
+                        <form>
+                            {% csrf_token %}
+                            <button name="deleteRecipeButton" class="deleteRecipeButton" onclick="return removeRecipe( '{{ recipe.id }}', this.parentElement.parentElement)">Delete</button>
+                        </form>
                         <form action="/editRecipe"  method="POST">
                             {% csrf_token %}
-                            <button class="editRecipeButton" name="recipeId" value="{{ recipe.id }}">edit</button>
+                            <button class="editRecipeButton" name="recipeId" value="{{ recipe.id }}">Edit</button>
                         </form>
                         <div class="recipeImageDiv">
                             <a href="{{ recipe.link }}" target="_blank"><img class="recipeImage" src="{{ recipe.image }}"></a>
                         </div>
                         <div class="titleAndTagsForRecipeDiv">
-                            <h1 class="titleForRecipe">{{ recipe }}</h1>
+                            <h1 class="titleForRecipe" value="{{ recipe }}">{{ recipe }}</h1>
                             <p class="tagsForRecipeText">
                                 Tags: 
                                 {% for tag in recipe.tagNames.all %}

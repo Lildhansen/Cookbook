@@ -15,6 +15,7 @@ button[name="tagInTagsMenu"] {
 .allTagsDiv {
   display: inline-block;
   border: 1px solid rgb(199, 15, 15);
+  width:100%;
 }
 
 .addTagsDiv {
@@ -31,10 +32,16 @@ button[name="tagInTagsMenu"] {
     height: 25px;
     margin:0px;
     border-bottom: 3px solid black;
-    z-index: 200;
+    z-index: 10000;
+    overflow:visible
 }
 
-#topBarSearchBar {
+.topBarOption{
+  
+}
+
+
+#topBarSearchBarDiv {
   float: none;
   position: absolute;
   top: 50%;
@@ -42,12 +49,28 @@ button[name="tagInTagsMenu"] {
   transform: translate(-50%, -50%);
 }
 
-#topBarFilterSelection {
+#topBarFilterSelectionDiv {
   float: none;
   position: absolute;
   top: 50%;
   left: 30%;
   transform: translate(-50%, -50%);
+  z-index: 10000;
+  width: 300px;
+}
+
+#topBarFilterSelectionDiv >* {
+  top: 50%;
+  bottom: 50%;
+  float:left;
+}
+
+/* THIS STUPID DIV WONT GET VERTICALLY CENTERED - maybe fixed i dunno*/
+#FilterSelectionDiv {
+  top:12px;
+  float:right;
+  vertical-align: middle; 
+  position:relative;
 }
 
 #topBarTypeOfSearch {
@@ -56,7 +79,6 @@ button[name="tagInTagsMenu"] {
   top: 50%;
   left: 70%;
   transform: translate(-50%, -50%);
-  display: inline;
   width: 200px;
 }
 
@@ -71,8 +93,7 @@ button[name="tagInTagsMenu"] {
 .showRecipesSection{
   width: 1000px;
   height: 100%;
-  margin-top: 100px;
-  background-color: red;
+  margin-top: 150px;
   
   position: absolute;
   top:0;
@@ -92,18 +113,17 @@ button[name="tagInTagsMenu"] {
   margin:auto;
   display: block;
   margin-top: 20px;
-  background-color: blue;
 }
 
 .recipeDiv{
   width:33%;
   height: 100%;
   position: relative;
-  background-color: green;
   float:left;
   text-align:center;
   margin-right: .3%;
   display: grid;
+  
 }
 
 .titleAndTagsForRecipeDiv{
@@ -116,13 +136,15 @@ button[name="tagInTagsMenu"] {
   text-align: center;
   margin:auto;
   color:black;
-  z-index:100;
+  position: relative;
+  z-index:9000;
 }
 
 .tagsForRecipeText{
   position: absolute;
   display: block;
   text-align: center;
+  background-color: white;
 }
 
 .recipeImageDiv{
@@ -151,6 +173,10 @@ button[name="tagInTagsMenu"] {
   width: 100%;
 }
 
+.deleteRecipeButton {
+  z-index:100;
+}
+
 .editRecipeTextFields{
   width:98%;
   height: 98%;
@@ -159,10 +185,9 @@ button[name="tagInTagsMenu"] {
 
 .tagSection {
   margin-left: 8px;
-  margin-top: 100px;
+  margin-top: 150px;
   float:left;
-  max-width: 10%;
-
+  margin-right:auto
 }
 
 .inputsForStuffToChangeOnRecipe{
@@ -182,10 +207,9 @@ button[name="tagInTagsMenu"] {
 
 /* THIS STUPID DIV WONT GET VERTICALLY CENTERED - maybe fixed i dunno*/
 #typeOfSearchSelectionDiv {
-  top:15px;
+  top:12px;
   float:right;
   vertical-align: middle; 
-  overflow:hidden;
   position:relative;
 }
 
@@ -217,7 +241,7 @@ button[name="tagInTagsMenu"] {
 
 .addRecipeSection {
   margin-right: 8px;
-  margin-top: 100px;
+  margin-top: 150px;
   float: right;
 }
 

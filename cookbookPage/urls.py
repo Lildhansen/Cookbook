@@ -18,5 +18,6 @@ urlpatterns = [
     path('saveEditedRecipe', views.saveEditedRecipe, name="saveEditedRecipe"),
     path('exitEditing', views.exitEditing, name="exitEditing"),
     path('exitEditingAllRecipes', views.exitEditingAllRecipes, name="exitEditingAllRecipes"),
+    path('filterRecipes', views.filterRecipes, name="filterRecipes"),
     
 ]

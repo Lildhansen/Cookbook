@@ -17,28 +17,45 @@
     <div class="topBar"> <!-- pt er det mere tags der bare skal flyttes længere ned-->
         <div class="wrapper">
             <div class="topBarOption" id="topBarSearchBarDiv">
-                <input list="searchBarSuggestions" type="search" placeholder="recipe ..." oninput="updateSearch(this)">
+                <input id="searchBarForRecipeOrTag" list="searchBarSuggestions" type="search" placeholder="recipe..." oninput="updateSearch(this)">
                 <datalist id="searchBarSuggestions">
                     
                 </datalist>
                 <!-- this placeholder should be changed when changing #topBarTypeOfSearch -->
             </div>
         </div>
-        <div class="topBarOption" id="topBarFilterSelection">
-            <select>
-                <option value="" selected disabled hidden>Filter</option>
-                <option>date added (descending)</option>
-                <option>date added (ascending)</option>
-            </select>
-            <input type="image" src="{% static 'images/deleteTag.png' %}" width="10" height="10">
+        <div class="topBarOption" id="topBarFilterSelectionDiv">
+            <div>
+                <p>Filter by</p>
+            </div>
+            <div id="FilterSelectionDiv">
+                <form action="/filterRecipes"  method="POST">
+                    {% csrf_token %}
+                    <select id="FilterSelection" name="FilterSelection" onchange="this.form.submit();" onload="setCorrectFilteredRecipe(this)">
+                            <!-- surely there is a better way than this but i do not know how-->
+                            {% if filterBy == "dateAddedDescending" %}
+                            <option selected value="dateAddedDescending">Date added (descending)</option>
+                            <option value="dateAddedAscending">Date added (ascending)</option>
+                            <option value="random">Randomly</option>
+                            {% elif filterBy == "dateAddedAscending" %}
+                            <option value="dateAddedDescending">Date added (descending)</option>
+                            <option selected value="dateAddedAscending">Date added (ascending)</option>
+                            <option value="random">Randomly</option>
+                            {% elif filterBy == "random" %}
+                            <option value="dateAddedDescending">Date added (descending)</option>
+                            <option value="dateAddedAscending">Date added (ascending)</option>
+                            <option selected value="random">Randomly</option>
+                            {% endif %}
+                    </select>
+                </form>
+            </div>
         </div>
         <div class="topBarOption" id="topBarTypeOfSearch">
             <div>
-                <p>search for ...</p>
+                <p>Search for ...</p>
             </div>
             <div id="typeOfSearchSelectionDiv">
                 <select id="typeOfSearchSelection" onchange="return changeTypeOfSearchSelection(this)">
-                    <!--would be nice if this could be handled by js-->
                     <option value="recipes">recipes</option>
                     <option value="tags">tags</option>
                 </select>

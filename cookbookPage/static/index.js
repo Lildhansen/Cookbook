@@ -50,8 +50,6 @@ function sendDeleteRecipeHTTP(idOfRecipeToDelete)
 }
 
 
-
-//return window.confirm('Are you sure you want to delete this tag? ')
 function removeTag(removeSymbolDivForTagToRemove)
 {
     tagElement = removeSymbolDivForTagToRemove.parentElement
@@ -140,14 +138,12 @@ function updateSearch(searchBar)
     allRecipeElements = document.getElementsByClassName("recipeDiv")
     if (typeOfSearch.value == "recipes")
     {
-        console.log(allRecipeElements.length)
         for (const recipeElement of allRecipeElements)
         {
             recipeElement.style.display = "grid"
             //if recipe is being edited they should always be shown
             if (recipeIsBeingEdited(recipeElement))
             {
-                console.log("edit")
                 recipeElement.style.display = "grid"
             }
 
@@ -161,7 +157,6 @@ function updateSearch(searchBar)
             }
         }
 
-        console.log(allRecipeElements)
     }
 
     else if (typeOfSearch.value == "tags")
@@ -194,8 +189,10 @@ function updateSearch(searchBar)
 //handles updating the suggested search results
 function changeTypeOfSearchSelection(typeOfSearchSelection)
 {
+    searchBar = document.getElementById("searchBarForRecipeOrTag")
     if (typeOfSearchSelection.value == "tags")
     {
+        searchBar.placeholder = "tags..."
         allTagElements = document.getElementsByClassName("tagElement")
         for (tagElement of allTagElements)
         {
@@ -210,6 +207,7 @@ function changeTypeOfSearchSelection(typeOfSearchSelection)
 
     else if (typeOfSearchSelection.value == "recipes")
     {
+        searchBar.placeholder = "recipe..."
         searchBarSuggestions = document.getElementById("searchBarSuggestions")
         while (searchBarSuggestions.firstChild) 
         {

@@ -234,6 +234,7 @@ button[name="tagInTagsMenu"] {
 
 .tagElement {
   width:100%;
+  display: flow-root; /*somehow fixer det her så tags er på lige linje*/
 }
 
 .addTagText {

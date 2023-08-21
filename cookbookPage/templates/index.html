@@ -163,7 +163,7 @@
                             <p class="titleForChangingStuffForRecipe">Change image for recipe:</p>
                             <input class="inputsForStuffToChangeOnRecipe" type="url" title="change recipe image" name="imageOfRecipeToEdit" id="imageOfRecipeToEdit" value="{{ recipe.image }}">
                             <p class="titleForChangingStuffForRecipe">Add/remove tags from recipe:</p>
-                            <select multiple="multiple" name="tagsOfRecipeToEdit">
+                            <select multiple="multiple" name="tagsOfRecipeToEdit" class="tagsOfRecipeToEdit">
                             {% for tag in myTags %}
                                 {% if tag in recipe.tagNames.all %}
                                     <option value="{{ tag }}" selected>{{ tag }}</option>

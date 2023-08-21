@@ -132,6 +132,10 @@ button[name="tagInTagsMenu"] {
   display: inline-block;
 }
 
+.tagsOfRecipeToEdit {
+  z-index: 10000;
+}
+
 .titleForRecipe{
   text-align: center;
   margin:auto;
